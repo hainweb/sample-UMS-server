@@ -36,5 +36,30 @@ module.exports = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
-  
+  doLogin: async (req, res) => {
+    try {
+      let { email, password } = req.body;
+      const user = await User.findOne({ email });
+      if (user) {
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (isPasswordMatch) {
+          console.log("pss matched");
+
+          return res.status(200).json({ success: true });
+        } else {
+          console.log("Pasword incorrect", isPasswordMatch);
+
+          return res.json({ status: false, message: "Incorrect Password" });
+        }
+      } else {
+        console.log("user not found");
+
+        return res.json({ success: false, message: "User not found" });
+      }
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
 };
