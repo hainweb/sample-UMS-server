@@ -2,6 +2,14 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 module.exports = {
+  getSession: async (req, res) => {
+    try {
+      console.log(req.session.user);
+      res.json(req.session.user);
+    } catch (error) {
+      console.log(error);
+    }
+  },
   signup: async (req, res) => {
     try {
       let { name, age, email, password, createdAt } = req.body;
@@ -28,7 +36,12 @@ module.exports = {
         createdAt,
       });
       console.log("response", response);
-
+      req.session.user = {
+        name: user.name,
+        age: user.age,
+        email: user.email,
+        createdAt: user.createdAt,
+      };
       res.status(200).json({ success: true, userId: response._id });
     } catch (error) {
       console.log(error);
@@ -44,7 +57,12 @@ module.exports = {
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (isPasswordMatch) {
           console.log("pss matched");
-
+          req.session.user = {
+            name: user.name,
+            age: user.age,
+            email: user.email,
+            createdAt: user.createdAt,
+          };
           return res.status(200).json({ success: true });
         } else {
           console.log("Pasword incorrect", isPasswordMatch);
