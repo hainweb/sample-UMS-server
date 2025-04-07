@@ -1,3 +1,27 @@
-module.exports={
-    
-}
+const User = require("../models/User");
+
+module.exports = {
+  getUserProfile: async (req, res) => {
+    try {
+      if (!req.session.user) {
+        return res.json({ success: false, message: "Invalid credantials" });
+      }
+      const userId = req.session.user._id; 
+      console.log('user ', userId, req.session);
+      
+      const response = await User.findById(userId);
+      console.log(response);
+      const user = {
+        name: response.name,
+        age: response.age,
+        email: response.email,
+        role: response.role,
+        createdAt: response.createdAt,
+      };
+      res.json(user);
+    } catch (error) {
+      res.json({ message: "Internal server error" });
+      console.log(error);
+    }
+  },
+};

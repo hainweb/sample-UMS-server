@@ -4,6 +4,7 @@ const logger = require("morgan");
 const dotenv = require("dotenv");
 const authRouter = require("./routes/authRoute");
 const session = require("express-session");
+const userRouter = require("./routes/userRoute");
 const app = express();
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use(
 connectDb();
 
 app.use("/api/auth", authRouter);
+app.use('/api/', userRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is runing on PORT ${PORT}`);

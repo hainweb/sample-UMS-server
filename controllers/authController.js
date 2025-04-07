@@ -33,14 +33,16 @@ module.exports = {
         age,
         email,
         password,
+        role: "user",
         createdAt,
       });
       console.log("response", response);
       req.session.user = {
-        name: user.name,
-        age: user.age,
-        email: user.email,
-        createdAt: user.createdAt,
+        _id: response._id,
+        name: response.name,
+        age: response.age,
+        email: response.email,
+        createdAt: response.createdAt,
       };
       res.status(200).json({ success: true, userId: response._id });
     } catch (error) {
@@ -58,6 +60,7 @@ module.exports = {
         if (isPasswordMatch) {
           console.log("pss matched");
           req.session.user = {
+            _id: user._id,
             name: user.name,
             age: user.age,
             email: user.email,
