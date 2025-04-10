@@ -5,6 +5,8 @@ const dotenv = require("dotenv");
 const authRouter = require("./routes/authRoute");
 const session = require("express-session");
 const userRouter = require("./routes/userRoute");
+const cors = require("cors");
+
 const app = express();
 dotenv.config();
 
@@ -14,6 +16,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const PORT = 5000;
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(
   session({
@@ -30,7 +40,7 @@ app.use(
 connectDb();
 
 app.use("/api/auth", authRouter);
-app.use('/api/', userRouter)
+app.use("/api/", userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is runing on PORT ${PORT}`);
