@@ -6,9 +6,9 @@ module.exports = {
       if (!req.session.user) {
         return res.json({ success: false, message: "Invalid credantials" });
       }
-      const userId = req.session.user._id; 
-      console.log('user ', userId, req.session);
-      
+      const userId = req.session.user._id;
+      console.log("user ", userId, req.session);
+
       const response = await User.findById(userId);
       console.log(response);
       const user = {
@@ -22,6 +22,23 @@ module.exports = {
     } catch (error) {
       res.json({ message: "Internal server error" });
       console.log(error);
+    }
+  },
+  editUserProfile: async (req, res) => {
+    try {
+      let { name, age, email } = req.query;
+      console.log(name, age, email);
+      let userId = req.session.user._id;
+
+      const response = await User.findByIdAndUpdate(userId, {
+        name,
+        age,
+        email,
+      });
+      console.log(response);
+      res.json({ success: true });
+    } catch (error) {
+      res.json({ message: "Internal server error" });
     }
   },
 };
