@@ -6,6 +6,7 @@ const authRouter = require("./routes/authRoute");
 const session = require("express-session");
 const userRouter = require("./routes/userRoute");
 const cors = require("cors");
+const adminRouter = require("./routes/adminRoute");
 
 const app = express();
 dotenv.config();
@@ -41,6 +42,7 @@ connectDb();
 
 app.use("/api/auth", authRouter);
 app.use("/api/", userRouter);
+app.use("/api/admin", adminRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is runing on PORT ${PORT}`);
