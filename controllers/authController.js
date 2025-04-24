@@ -83,4 +83,42 @@ module.exports = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+
+  adminLogin: async (req, res) => {
+    try {
+      let { email, password } = req.body;
+      const admin = await User.findOne({ email });
+      if (admin) {
+        if (admin.role !== "admin") {
+          return res.json({
+            success: false,
+            message: "This account have not access to the admin page",
+          });
+        }
+
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (isPasswordMatch) {
+          console.log("pss matched");
+          req.session.user = {
+            _id: user._id,
+            name: user.name,
+            age: user.age,
+            email: user.email,
+            createdAt: user.createdAt,
+          };
+          return res.status(200).json({ success: true });
+        } else {
+          console.log("Pasword incorrect", isPasswordMatch);
+
+          return res.json({ status: false, message: "Incorrect Password" });
+        }
+      } else {
+        return res.json({ success: false, message: "Invalid credentials" });
+      }
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
 };
