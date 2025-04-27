@@ -7,6 +7,6 @@ const { verifyUser } = require("../service/verifyUser");
 const router = express.Router();
 
 router.get("/profile", verifyUser, getUserProfile);
-router.put("/edit-profile", verifyUser, editUserProfile);
+router.post("/edit-profile", verifyUser, editUserProfile);
 
 module.exports = router;

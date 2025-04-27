@@ -96,15 +96,15 @@ module.exports = {
           });
         }
 
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        const isPasswordMatch = await bcrypt.compare(password, admin.password);
         if (isPasswordMatch) {
           console.log("pss matched");
-          req.session.user = {
-            _id: user._id,
-            name: user.name,
-            age: user.age,
-            email: user.email,
-            createdAt: user.createdAt,
+          req.session.admin = {
+            _id: admin._id,
+            name: admin.name,
+            age: admin.age,
+            email: admin.email,
+            createdAt: admin.createdAt,
           };
           return res.status(200).json({ success: true });
         } else {

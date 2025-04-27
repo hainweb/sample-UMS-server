@@ -26,14 +26,14 @@ module.exports = {
   },
   editUserProfile: async (req, res) => {
     try {
-      let { name, age, email } = req.query;
-      console.log(name, age, email);
+      let { name, age } = req.query;
+      console.log(name, age);
       let userId = req.session.user._id;
 
       const response = await User.findByIdAndUpdate(userId, {
         name,
         age,
-        email,
+        
       });
       console.log(response);
       res.json({ success: true });
