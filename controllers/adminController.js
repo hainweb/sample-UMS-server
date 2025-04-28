@@ -10,4 +10,14 @@ module.exports = {
       res.json({ message: "Internal server error" });
     }
   },
+  deleteUser: async (req, res) => {
+    try {
+      let { userId } = req.body;
+      const response = await User.findByIdAndDelete(userId);
+      console.log(response);
+      res.json({ success: true });
+    } catch (error) {
+      res.json("Internal server error");
+    }
+  },
 };

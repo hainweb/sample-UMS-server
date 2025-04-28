@@ -1,8 +1,9 @@
 const express = require("express");
-const { getUsers } = require("../controllers/adminController");
+const { getUsers, deleteUser } = require("../controllers/adminController");
 const { verifyAdmin } = require("../service/verifyAdmin");
 const router = express.Router();
 
 router.get("/get-users", verifyAdmin, getUsers);
+router.delete("/delete-user", verifyAdmin, deleteUser);
 
 module.exports = router;
