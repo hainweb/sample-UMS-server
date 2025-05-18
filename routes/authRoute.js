@@ -7,7 +7,6 @@ const {
 } = require("../controllers/authController");
 const router = express.Router();
 
-// router.post('/login')
 
 router.post("/session", getSession);
 

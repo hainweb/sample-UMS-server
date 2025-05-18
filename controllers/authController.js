@@ -42,6 +42,7 @@ module.exports = {
         name: response.name,
         age: response.age,
         email: response.email,
+        role: response.role,
         createdAt: response.createdAt,
       };
       res.status(200).json({ success: true, userId: response._id });
@@ -64,9 +65,12 @@ module.exports = {
             name: user.name,
             age: user.age,
             email: user.email,
+            role: user.role,
             createdAt: user.createdAt,
           };
-          return res.status(200).json({ success: true });
+          return res
+            .status(200)
+            .json({ success: true, user: req.session.user });
         } else {
           console.log("Pasword incorrect", isPasswordMatch);
 
