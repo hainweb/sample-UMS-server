@@ -26,7 +26,8 @@ module.exports = {
   },
   editUserProfile: async (req, res) => {
     try {
-      let { name, age } = req.query;
+      
+      let { name, age } = req.body;
       console.log(name, age);
       let userId = req.session.user._id;
 
