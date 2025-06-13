@@ -26,7 +26,6 @@ module.exports = {
   },
   editUserProfile: async (req, res) => {
     try {
-      
       let { name, age } = req.body;
       console.log(name, age);
       let userId = req.session.user._id;
@@ -34,12 +33,19 @@ module.exports = {
       const response = await User.findByIdAndUpdate(userId, {
         name,
         age,
-        
       });
       console.log(response);
       res.json({ success: true });
     } catch (error) {
       res.json({ message: "Internal server error" });
+    }
+  },
+  getUser: (req, res) => {
+    let user = req.session.user;
+    if (user) {
+      res.json({ success: true, user });
+    } else {
+      res.json({ success: false, message: "Unauthorized" });
     }
   },
 };
