@@ -88,6 +88,15 @@ module.exports = {
     }
   },
 
+  doLogout: async (req, res) => {
+    try {
+      req.session.user = null;
+      res.json({ success: true });
+    } catch (error) {
+      res.json({ success: false, message: "Internal server error" });
+    }
+  },
+
   adminLogin: async (req, res) => {
     try {
       let { email, password } = req.body;
