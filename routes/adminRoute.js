@@ -4,6 +4,6 @@ const { verifyAdmin } = require("../service/verifyAdmin");
 const router = express.Router();
 
 router.get("/get-users", verifyAdmin, getUsers);
-router.delete("/delete-user", verifyAdmin, deleteUser);
+router.delete("/delete-user/:id", verifyAdmin, deleteUser);
 
 module.exports = router;

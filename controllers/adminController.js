@@ -12,8 +12,8 @@ module.exports = {
   },
   deleteUser: async (req, res) => {
     try {
-      let { userId } = req.body;
-      const response = await User.findByIdAndDelete(userId);
+      let { id } = req.params;
+      const response = await User.findByIdAndDelete(id);
       console.log(response);
       res.json({ success: true });
     } catch (error) {
